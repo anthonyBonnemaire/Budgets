@@ -10,8 +10,6 @@ namespace Budgets.Core
         public static Checker CheckerValid = new Checker { IsValid = true, Message = "It's Ok" };
         
         public static Checker CreateCheckerError(string message) => new Checker { IsValid = false, Message = message };
-
-
     }
 
     public class Checker<TResult> : Checker

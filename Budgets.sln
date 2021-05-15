@@ -11,11 +11,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1DAF63FA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Budgets.Core.Tests", "Budgets.Core.Tests\Budgets.Core.Tests.csproj", "{85D6376A-D54D-46A8-BC12-9B916E89CCC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budgets.Infrastucture", "MockExpenditureRepository\Budgets.Infrastucture.csproj", "{08381CBF-D818-4D7A-813B-37D182AD60AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budgets.Infrastucture", "Budgets.Infrastucture\Budgets.Infrastucture.csproj", "{08381CBF-D818-4D7A-813B-37D182AD60AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budgets.Ports", "Budgets.Ports\Budgets.Ports.csproj", "{A43F671B-52CF-4401-A237-193F313413CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Budgets.Ports", "Budgets.Ports\Budgets.Ports.csproj", "{A43F671B-52CF-4401-A237-193F313413CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budget.Model", "Budget.Model\Budget.Model.csproj", "{A1655ED1-5F27-4687-BDE9-53E1B7F9DEC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Budgets.Model", "Budget.Model\Budgets.Model.csproj", "{A1655ED1-5F27-4687-BDE9-53E1B7F9DEC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budgets.Infrastructure.Tests", "Budgets.Infrastructure.Tests\Budgets.Infrastructure.Tests.csproj", "{BF145ABF-E5FD-4761-B2BA-DADC18E7F731}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,12 +49,17 @@ Global
 		{A1655ED1-5F27-4687-BDE9-53E1B7F9DEC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1655ED1-5F27-4687-BDE9-53E1B7F9DEC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1655ED1-5F27-4687-BDE9-53E1B7F9DEC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF145ABF-E5FD-4761-B2BA-DADC18E7F731}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF145ABF-E5FD-4761-B2BA-DADC18E7F731}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF145ABF-E5FD-4761-B2BA-DADC18E7F731}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF145ABF-E5FD-4761-B2BA-DADC18E7F731}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{85D6376A-D54D-46A8-BC12-9B916E89CCC1} = {1DAF63FA-6079-4129-9C18-2ED41E9093E7}
+		{BF145ABF-E5FD-4761-B2BA-DADC18E7F731} = {1DAF63FA-6079-4129-9C18-2ED41E9093E7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A4B97CFD-2B54-4018-A07C-8D5EB7F3E671}

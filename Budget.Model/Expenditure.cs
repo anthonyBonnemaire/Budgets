@@ -1,4 +1,6 @@
-﻿namespace Budget.Model
+﻿using System;
+
+namespace Budgets.Model
 {
-    public record Expenditure(string Name, double Value);
+    public record Expenditure(string Name, double Value, Guid IdBudget);
 }

@@ -66,7 +66,7 @@ namespace Budgets.Core.Tests
         [Fact]
         public void AddBudgetWithSameCategory()
         {
-            var budgetOne = new Budget(10, "Name 1", "Category"); ;
+            var budgetOne = new Budget(10, "Name 1");
             var checkerGoodOne = _Wallet.AddBudget(budgetOne);
             var checkerFailBecauseExist = _Wallet.AddBudget(budgetOne);
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Budgets.Model;
+using System;
 using System.Collections.Generic;
 
 namespace Budgets.Ports
