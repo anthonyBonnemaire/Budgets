@@ -19,7 +19,7 @@ namespace Budgets.Core
         public static Checker<TResult> CreateCheckerValidWithValue(TResult result)
             => new Checker<TResult> { IsValid = true, Message = "It's Ok", Result = result };
 
-        public static Checker<TResult> CreateCheckerError(string message) => new Checker<TResult> { IsValid = false, Message = message };
+        public new static Checker<TResult> CreateCheckerError(string message) => new Checker<TResult> { IsValid = false, Message = message };
 
     }
 }

@@ -20,7 +20,7 @@ namespace Budgets.Core
         public IEnumerable<Budget> GetBudgets()
         {
             return _BudgetRepository.GetBudgets()
-                .Select( bm => _BudgetModelFactory.CreateBudget(bm)).ToList();
+                ?.Select( bm => _BudgetModelFactory.CreateBudget(bm))?.ToList() ?? new List<Budget>();
         }
     }
 }

@@ -17,7 +17,10 @@ namespace Budgets.Core
 
         public Budget CreateBudget(Budgets.Model.Budget budgetModel)
         {
-            var budget  = new Budget(budgetModel.Initial, budgetModel.Name);
+            if (budgetModel == null)
+                return Budget.BudgetEmpty;
+
+            var budget = new Budget(budgetModel.Initial, budgetModel.Name);
 
             var expendituresModels = _ExpenditureRepository.GetExpendituresByBudget(budgetModel.Id);
             if (expendituresModels == null)

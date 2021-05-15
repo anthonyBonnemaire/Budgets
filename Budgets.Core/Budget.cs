@@ -15,6 +15,8 @@ namespace Budgets.Core
         
         public double BudgetActual { get => BudgetInitial - Expenditures.Sum(e => e.Value); }
 
+        public static readonly Budget BudgetEmpty = new Budget(0, "Budget par défaut"); 
+
         public Budget(uint budgetInitial, string name)
         {
             _Expenditures = new List<Expenditure>();
