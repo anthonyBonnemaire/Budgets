@@ -48,13 +48,13 @@ namespace Budgets.Core.Tests
 
             var expectedExpenditures = new List<Model.Expenditure>
             {
-                new Model.Expenditure("Name 1", 10,idBudget),
-                new Model.Expenditure("Name 2", 3, idBudget),
+                new Model.Expenditure("Name 1", 10,idBudget, DateTime.Now),
+                new Model.Expenditure("Name 2", 3, idBudget, DateTime.Now),
             };
 
             var expectedBudget = new Budget(10, "Name 1");
             foreach (var expenditure in expectedExpenditures)
-                expectedBudget.AddExpenditure(new Expenditure(expenditure.Name, expenditure.Value));
+                expectedBudget.AddExpenditure(new Expenditure(expenditure.Name, expenditure.Value, expenditure.CreationDate));
 
             _MockExpenditureRepository.Setup(s => s.GetExpendituresByBudget(It.IsAny<Guid>()))
                 .Returns(expectedExpenditures);

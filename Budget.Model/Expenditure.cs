@@ -2,5 +2,5 @@
 
 namespace Budgets.Model
 {
-    public record Expenditure(string Name, double Value, Guid IdBudget);
+    public record Expenditure(string Name, double Value, Guid IdBudget, DateTime CreationDate);
 }

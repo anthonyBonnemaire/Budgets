@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Budgets.Core
@@ -37,6 +38,19 @@ namespace Budgets.Core
 
             AddBudget(budgetClone);
             return Checker<Budget>.CreateCheckerValidWithValue(budgetClone);
+        }
+
+        public Checker ChangeBudgetName(string oldName, string newName)
+        {
+            var budgetWithOldName = Budgets.FirstOrDefault(b => b.Name == oldName);
+            if (budgetWithOldName == null)
+                return Checker.CreateCheckerError($"Nothing budget exist with this name ({oldName})");
+            if (Budgets.Any(b => b != budgetWithOldName && b.Name == newName))
+                return Checker.CreateCheckerError($"This name ({newName}) is always uses. So you cannot change the name.");
+
+
+            return budgetWithOldName.ChangeName(newName);
+
         }
     }
 }

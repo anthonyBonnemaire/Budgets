@@ -138,5 +138,36 @@ namespace Budgets.Core.Tests
             Assert.Equal(950, _Wallet.WalletInitial);
             Assert.Equal(10, _Wallet.WalletActual);
         }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("       ")]
+        [InlineData("Name 1")]
+        [InlineData("Name 2")]
+        public void ChangeBudgetName_NotRun(string nameNotRun)
+        {
+            Budget budget = new Budget(10, "Name 1");
+            Budget budget2 = new Budget(10, "Name 2");
+            _Wallet.AddBudget(budget);
+            _Wallet.AddBudget(budget2);
+
+            var checker = _Wallet.ChangeBudgetName("Name 1", nameNotRun);
+
+            Assert.False(checker.IsValid);
+            Assert.Equal("Name 1", budget.Name);
+        }
+
+        [Fact]
+        public void ChangeBudgetName_Run()
+        {
+            Budget budget = new Budget(10, "Name 1");
+            _Wallet.AddBudget(budget);
+
+            var checker = _Wallet.ChangeBudgetName("Name 1", "Change Name 1");
+
+            Assert.True(checker.IsValid);
+            Assert.Equal("Change Name 1", budget.Name);
+        }
     }
 }

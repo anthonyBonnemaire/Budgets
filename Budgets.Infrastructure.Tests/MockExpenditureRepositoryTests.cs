@@ -36,9 +36,9 @@ namespace Budgets.Infrastructure.Tests
             var idBudget = Guid.NewGuid();
             var expenditures = new List<Expenditure>
             {
-                new Expenditure("name 1", 10, idBudget),
-                new Expenditure("name 2", 50, idBudget),
-                new Expenditure("name 3", 10, Guid.NewGuid()),
+                new Expenditure("name 1", 10, idBudget, DateTime.Now),
+                new Expenditure("name 2", 50, idBudget, DateTime.Now),
+                new Expenditure("name 3", 10, Guid.NewGuid(), DateTime.Now),
             };
 
             var mockExpenditureRepository = new MockExpenditureRepository(expenditures);

@@ -6,5 +6,7 @@ namespace Budgets.Ports
     public interface IBudgetRepository
     {
         IEnumerable<Budget> GetBudgets();
+
+        void Save();
     }
 }

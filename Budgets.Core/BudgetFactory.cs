@@ -28,7 +28,7 @@ namespace Budgets.Core
 
             foreach(var expenditure in expendituresModels)
             {
-                budget.AddExpenditure(new Expenditure(expenditure.Name, expenditure.Value));
+                budget.AddExpenditure(new Expenditure(expenditure.Name, expenditure.Value, expenditure.CreationDate));
             }
 
             return budget;
