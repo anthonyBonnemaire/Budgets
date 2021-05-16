@@ -15,12 +15,12 @@ namespace Budgets.Core
         }
 
 
-        public Budget CreateBudget(Budgets.Model.Budget budgetModel)
+        public IBudget CreateBudget(Budgets.Model.Budget budgetModel)
         {
             if (budgetModel == null)
-                return Budget.BudgetEmpty;
+                return BudgetRoot.BudgetEmpty;
 
-            var budget = new Budget(budgetModel.Initial, budgetModel.Name);
+            var budget = new BudgetRoot(budgetModel.Id, budgetModel.Initial, budgetModel.Name);
 
             var expendituresModels = _ExpenditureRepository.GetExpendituresByBudget(budgetModel.Id);
             if (expendituresModels == null)

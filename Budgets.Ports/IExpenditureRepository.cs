@@ -7,6 +7,6 @@ namespace Budgets.Ports
     public interface IExpenditureRepository
     {
         IEnumerable<Expenditure> GetExpendituresByBudget(Guid idBudget);
-        void Save();
+        void Save(IEnumerable<Expenditure> expenditures);
     }
 }

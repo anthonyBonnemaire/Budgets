@@ -37,5 +37,13 @@ namespace Budgets.Infrastucture
         {
             return _Budgets?.AsReadOnly() ?? new List<Budget>().AsReadOnly();
         }
+
+        public void Save(IEnumerable<Budget> budgets)
+        {
+        }
+
+        public void Save(Budget budget)
+        {
+        }
     }
 }

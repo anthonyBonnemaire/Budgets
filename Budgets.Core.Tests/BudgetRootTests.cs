@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Budgets.Core.Tests
 {
-    public class BudgetTests
+    public class BudgetRootTests
     {
 
         [Theory]
@@ -14,7 +14,7 @@ namespace Budgets.Core.Tests
         [InlineData(uint.MinValue)]
         public void CreateBudgetAndCheckExpendituresExist(uint bugetInitial)
         {
-            var budget = new Budget(bugetInitial, "Name");
+            var budget = new BudgetRoot(bugetInitial, "Name");
             Assert.NotNull(budget.Expenditures);
             Assert.Equal(budget.BudgetInitial, budget.BudgetActual);
         }
@@ -22,7 +22,7 @@ namespace Budgets.Core.Tests
         [Fact]
         public void AddOneExpenditure()
         {
-            var budget = new Budget(11, "Name");
+            var budget = new BudgetRoot(11, "Name");
             var expenditure = new Expenditure("Name", 10.5);
             var checker = budget.AddExpenditure(expenditure);
             Assert.Equal(expenditure, budget.Expenditures.First());
@@ -34,7 +34,7 @@ namespace Budgets.Core.Tests
         [Fact]
         public void AddTwoExpenditure()
         {
-            var budget = new Budget(0, "Name");
+            var budget = new BudgetRoot(0, "Name");
             var expenditureOne = new Expenditure("Name", 1);
             var checkerOne = budget.AddExpenditure(expenditureOne);
 
@@ -52,7 +52,7 @@ namespace Budgets.Core.Tests
         [Fact]
         public void AddSameExpenditure()
         {
-            var budget = new Budget(0, "Name");
+            var budget = new BudgetRoot(0, "Name");
             var expenditureOne = new Expenditure("Name", 85);
             var checkerGoodOne = budget.AddExpenditure(expenditureOne);
             var checkerGoodTwo = budget.AddExpenditure(expenditureOne);
@@ -68,7 +68,7 @@ namespace Budgets.Core.Tests
         [Fact]
         public void AddExpenditure_NotExistExpenditure()
         {
-            var budget = new Budget(0, "Name");
+            var budget = new BudgetRoot(0, "Name");
 
             var checkerError = budget.AddExpenditure(null);
 
@@ -83,7 +83,7 @@ namespace Budgets.Core.Tests
         [InlineData(" ")]
         public void AddExpenditureWithoutName(string name)
         {
-            var budget = new Budget(0, "Name");
+            var budget = new BudgetRoot(0, "Name");
 
             var expenditureOne = new Expenditure(name, 85);
             var checkerError = budget.AddExpenditure(expenditureOne);
@@ -109,7 +109,7 @@ namespace Budgets.Core.Tests
         [MemberData(nameof(GetNotExistsExpenditure))]
         public void RemoveExpenditure_NotExistExpenditure(Expenditure expenditure)
         {
-            var budget = new Budget(0, "Name");
+            var budget = new BudgetRoot(0, "Name");
             budget.AddExpenditure(new Expenditure("Name", 20));
 
             var checkerError = budget.RemoveExpenditure(expenditure);
@@ -122,7 +122,7 @@ namespace Budgets.Core.Tests
         [Fact]
         public void RemoveExpenditure_ExistExpenditure()
         {
-            var budget = new Budget(100, "Name");
+            var budget = new BudgetRoot(100, "Name");
 
             var expenditureToRemove = new Expenditure("Name", 20);
 
@@ -141,7 +141,7 @@ namespace Budgets.Core.Tests
         [Fact]
         public void RemoveExpenditure_SameTwoExpenditures()
         {
-            var budget = new Budget(100, "Name");
+            var budget = new BudgetRoot(100, "Name");
 
             var expenditureToRemove = new Expenditure("Name", 20);
 
@@ -165,7 +165,7 @@ namespace Budgets.Core.Tests
         [MemberData(nameof(GetNotExistsExpenditure))]
         public void ReplaceExpenditure_NotExistExpenditure(Expenditure expenditureToRemove)
         {
-            var budget = new Budget(100, "Name");
+            var budget = new BudgetRoot(100, "Name");
 
             var expenditureReplace = new Expenditure("Name", 20);
 
@@ -189,7 +189,7 @@ namespace Budgets.Core.Tests
         [Fact]
         public void ReplaceExpenditure_Expenditure()
         {
-            var budget = new Budget(100, "Name");
+            var budget = new BudgetRoot(100, "Name");
 
             var expenditureToRemove = new Expenditure("Name", 20);
             var expenditureReplace = new Expenditure("Name Replace", 10, expenditureToRemove.CreationDate);
@@ -212,7 +212,7 @@ namespace Budgets.Core.Tests
         [Fact]
         public void ChangeBudgetInitial_Ok()
         {
-            Budget budget = new Budget(10, "Name 1");
+            BudgetRoot budget = new BudgetRoot(10, "Name 1");
             var checker = budget.ChangeInitialBudget(50);
 
             Assert.True(checker.IsValid);
@@ -222,7 +222,7 @@ namespace Budgets.Core.Tests
         [Fact]
         public void ChangeBudgetInitial_LessThanInitial()
         {
-            Budget budget = new Budget(10, "Name 1");
+            BudgetRoot budget = new BudgetRoot(10, "Name 1");
             var checker = budget.ChangeInitialBudget(5);
 
             Assert.True(checker.IsValid);
@@ -232,7 +232,7 @@ namespace Budgets.Core.Tests
         [Fact]
         public void ChangeBudgetInitial_ButBudgetActualWantNegatif()
         {
-            Budget budget = new Budget(10, "Name 1");
+            BudgetRoot budget = new BudgetRoot(10, "Name 1");
             budget.AddExpenditure(new Expenditure("name", 10));
 
             var checker = budget.ChangeInitialBudget(5);

@@ -17,10 +17,10 @@ namespace Budgets.Core
             _BudgetModelFactory = budgetFactory ?? throw new ArgumentNullException(nameof(budgetFactory));
         }
 
-        public IEnumerable<Budget> GetBudgets()
+        public IEnumerable<IBudget> GetBudgets()
         {
             return _BudgetRepository.GetBudgets()
-                ?.Select( bm => _BudgetModelFactory.CreateBudget(bm))?.ToList() ?? new List<Budget>();
+                ?.Select( bm => _BudgetModelFactory.CreateBudget(bm))?.ToList() ?? new List<IBudget>();
         }
     }
 }

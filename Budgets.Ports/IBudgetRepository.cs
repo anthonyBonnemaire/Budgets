@@ -7,6 +7,7 @@ namespace Budgets.Ports
     {
         IEnumerable<Budget> GetBudgets();
 
-        void Save();
+        void Save(IEnumerable<Budget> budgets);
+        void Save(Budget budget);
     }
 }

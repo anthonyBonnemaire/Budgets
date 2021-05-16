@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Budgets.Core
 {
-    public class Wallet
+    public class WalletRoot : IWallet
     {
-        private List<Budget> _Budgets = new List<Budget>();
-        public IEnumerable<Budget> Budgets { get => _Budgets.AsReadOnly(); }
+        private List<IBudget> _Budgets = new List<IBudget>();
+        public IEnumerable<IBudget> Budgets { get => _Budgets.AsReadOnly(); }
         public long WalletInitial { get => Budgets.Sum(b => b.BudgetInitial); }
         public double WalletActual { get => Budgets.Sum(b => b.BudgetActual); }
 
-        public Wallet()
+        public WalletRoot()
         {
-            _Budgets = new List<Budget>();
+            _Budgets = new List<IBudget>();
         }
 
-        public Checker AddBudget(Budget budget)
+        public Checker AddBudget(IBudget budget)
         {
             if (budget == null)
                 return Checker.CreateCheckerError("This budget does not exist.");
@@ -30,14 +29,18 @@ namespace Budgets.Core
             return Checker.CreateCheckerError("This budget has already been added.");
         }
 
-        public Checker<Budget> DuplicateBudget(string name)
+        public Checker<IBudget> DuplicateBudget(string name)
         {
             var budgetClone = _Budgets.FirstOrDefault(b => b.Name == name)?.CloneBudget();
+           
             if (budgetClone == null)
-                return Checker<Budget>.CreateCheckerError("Nothing budget exist with the name so you can't duplicate");
-
+                return Checker<IBudget>.CreateCheckerError("Nothing budget exist with the name so you can't duplicate");
+           
+            var numberAddToName = _Budgets.Count(b => b.Name.StartsWith(name)) - 1;
+            budgetClone.ChangeName($"{name} Clone {numberAddToName}");
+            
             AddBudget(budgetClone);
-            return Checker<Budget>.CreateCheckerValidWithValue(budgetClone);
+            return Checker<IBudget>.CreateCheckerValidWithValue(budgetClone);
         }
 
         public Checker ChangeBudgetName(string oldName, string newName)

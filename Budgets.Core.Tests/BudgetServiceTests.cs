@@ -23,8 +23,8 @@ namespace Budgets.Core.Tests
         [Fact]
         public void GetBudgets_ReturnEmpty()
         {
-            _MockBudgetRepository.Setup(s => s.GetBudgets()).Returns<IEnumerable<Budget>>(null);
-            _MockBudgetFactory.Setup(s => s.CreateBudget(It.IsAny<Model.Budget>())).Returns<Budget>(null);
+            _MockBudgetRepository.Setup(s => s.GetBudgets()).Returns<IEnumerable<BudgetRoot>>(null);
+            _MockBudgetFactory.Setup(s => s.CreateBudget(It.IsAny<Model.Budget>())).Returns<BudgetRoot>(null);
 
             var budgetEmpty = _BudgetService.GetBudgets();
             Assert.Empty(budgetEmpty);
@@ -41,7 +41,7 @@ namespace Budgets.Core.Tests
             };
 
             _MockBudgetRepository.Setup(s => s.GetBudgets()).Returns(budgets);
-            _MockBudgetFactory.Setup(s => s.CreateBudget(It.IsAny<Model.Budget>())).Returns(Budget.BudgetEmpty);
+            _MockBudgetFactory.Setup(s => s.CreateBudget(It.IsAny<Model.Budget>())).Returns(BudgetRoot.BudgetEmpty);
 
             var resultBudgets = _BudgetService.GetBudgets();
             Assert.Equal(3, resultBudgets.Count());

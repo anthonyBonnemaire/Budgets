@@ -21,19 +21,22 @@ namespace Budgets.Core.Tests
         public void CreateBudget_NotSetBudgetAndReturnEmpty()
         {
             var budgetEmpty = _BudgetFactory.CreateBudget(null);
-            Assert.Equal(Budget.BudgetEmpty, budgetEmpty);
+            Assert.Equal(BudgetRoot.BudgetEmpty, budgetEmpty);
         }
 
         [Fact]
         public void CreateBudget_AndReturnTheBudgetWithEmptyExpenditures()
         {
-            var expectedBudget = new Budget(10, "Name 1");
+            Guid idBudget = Guid.NewGuid();
+            var expectedBudget = new BudgetRoot(idBudget, 10, "Name 1");
 
             _MockExpenditureRepository.Setup(s => s.GetExpendituresByBudget(It.IsAny<Guid>()))
                 .Returns<IEnumerable<Model.Expenditure>>(null);
-            
-            var resultBudget = _BudgetFactory.CreateBudget(new Budgets.Model.Budget(Guid.NewGuid(), 10, "Name 1"));
 
+            var resultBudget = _BudgetFactory.CreateBudget(new Budgets.Model.Budget(idBudget, 10, "Name 1"));
+
+            Assert.True(expectedBudget.Equals(resultBudget));
+            Assert.False(expectedBudget == resultBudget);
             Assert.Equal(expectedBudget.BudgetActual, resultBudget.BudgetActual);
             Assert.Equal(expectedBudget.BudgetInitial, resultBudget.BudgetInitial);
             Assert.Equal(expectedBudget.Expenditures, resultBudget.Expenditures);
@@ -52,7 +55,7 @@ namespace Budgets.Core.Tests
                 new Model.Expenditure("Name 2", 3, idBudget, DateTime.Now),
             };
 
-            var expectedBudget = new Budget(10, "Name 1");
+            var expectedBudget = new BudgetRoot(idBudget, 10, "Name 1");
             foreach (var expenditure in expectedExpenditures)
                 expectedBudget.AddExpenditure(new Expenditure(expenditure.Name, expenditure.Value, expenditure.CreationDate));
 
@@ -61,6 +64,8 @@ namespace Budgets.Core.Tests
 
             var resultBudget = _BudgetFactory.CreateBudget(new Budgets.Model.Budget(idBudget, 10, "Name 1"));
 
+            Assert.True(expectedBudget.Equals(resultBudget));
+            Assert.False(expectedBudget == resultBudget);
             Assert.Equal(expectedBudget.BudgetActual, resultBudget.BudgetActual);
             Assert.Equal(expectedBudget.BudgetInitial, resultBudget.BudgetInitial);
             Assert.Equal(expectedBudget.Expenditures, resultBudget.Expenditures);

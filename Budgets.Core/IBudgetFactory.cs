@@ -2,6 +2,6 @@
 {
     public interface IBudgetFactory
     {
-        Budget CreateBudget(Model.Budget budgetModel);
+        IBudget CreateBudget(Model.Budget budgetModel);
     }
 }

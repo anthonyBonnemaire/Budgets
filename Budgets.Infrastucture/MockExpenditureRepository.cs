@@ -38,5 +38,9 @@ namespace Budgets.Infrastucture
             return _Expenditures?.Where(e => e.IdBudget == idBudget)?.ToList()
                 ?? new List<Expenditure>();
         }
+
+        public void Save(IEnumerable<Expenditure> expenditures)
+        {
+        }
     }
 }

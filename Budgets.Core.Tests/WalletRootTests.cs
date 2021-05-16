@@ -3,13 +3,13 @@ using Xunit;
 
 namespace Budgets.Core.Tests
 {
-    public class WalletTests
+    public class WalletRootTests
     {
-        private readonly Wallet _Wallet;
+        private readonly WalletRoot _Wallet;
 
-        public WalletTests()
+        public WalletRootTests()
         {
-            _Wallet = new Wallet();
+            _Wallet = new WalletRoot();
         }
 
         [Fact]
@@ -21,7 +21,7 @@ namespace Budgets.Core.Tests
         [Fact]
         public void AddOneBudget()
         {
-            var budget = new Budget(100, "Name 1"); ;
+            var budget = new BudgetRoot(100, "Name 1"); ;
             var checker = _Wallet.AddBudget(budget);
             Assert.Equal(budget, _Wallet.Budgets.First());
             Assert.True(checker.IsValid);
@@ -33,10 +33,10 @@ namespace Budgets.Core.Tests
         [Fact]
         public void AddTwoBudget()
         {
-            var budgetOne = new Budget(0, "Name 1");
+            var budgetOne = new BudgetRoot(0, "Name 1");
             var checkerOne = _Wallet.AddBudget(budgetOne);
 
-            var budgetTwo = new Budget(100, "Name 2");
+            var budgetTwo = new BudgetRoot(100, "Name 2");
             var checkerTwo = _Wallet.AddBudget(budgetTwo);
 
             Assert.Equal(2, _Wallet.Budgets.Count());
@@ -51,7 +51,7 @@ namespace Budgets.Core.Tests
         [Fact]
         public void AddSameBudget()
         {
-            var budgetOne = new Budget(10, "Name 1"); ;
+            var budgetOne = new BudgetRoot(10, "Name 1"); ;
             var checkerGoodOne = _Wallet.AddBudget(budgetOne);
             var checkerFailBecauseExist = _Wallet.AddBudget(budgetOne);
 
@@ -66,7 +66,7 @@ namespace Budgets.Core.Tests
         [Fact]
         public void AddBudgetWithSameCategory()
         {
-            var budgetOne = new Budget(10, "Name 1");
+            var budgetOne = new BudgetRoot(10, "Name 1");
             var checkerGoodOne = _Wallet.AddBudget(budgetOne);
             var checkerFailBecauseExist = _Wallet.AddBudget(budgetOne);
 
@@ -82,19 +82,22 @@ namespace Budgets.Core.Tests
         [Fact]
         public void DuplicateBudgetExist()
         {
-            var budgetOne = new Budget( 10, "Name 1");
-            var budgetTwo = new Budget( 50, "Name 2");
+            var budgetOne = new BudgetRoot( 10, "Name");
+            var budgetTwo = new BudgetRoot( 50, "Name 2");
             _Wallet.AddBudget(budgetOne);
             _Wallet.AddBudget(budgetTwo);
 
             var checkerWithBudgetClone = _Wallet.DuplicateBudget(budgetOne.Name);
+            var checkerWithBudgetClone2 = _Wallet.DuplicateBudget(budgetOne.Name);
 
-            Assert.Equal(3, _Wallet.Budgets.Count());
+            Assert.Equal(4, _Wallet.Budgets.Count());
             Assert.Equal(checkerWithBudgetClone.Result, _Wallet.Budgets.ElementAt(2));
-            Assert.Equal(checkerWithBudgetClone.Result.Name, budgetOne.Name);
+            Assert.Equal(1, _Wallet.Budgets.Count(e => e.Name == checkerWithBudgetClone.Result.Name));
             Assert.NotSame(checkerWithBudgetClone.Result, budgetOne);
-            Assert.Equal(70, _Wallet.WalletInitial);
-            Assert.Equal(70, _Wallet.WalletActual);
+            Assert.Equal(80, _Wallet.WalletInitial);
+            Assert.Equal(80, _Wallet.WalletActual);
+            Assert.Equal("Name Clone 1", checkerWithBudgetClone.Result.Name);
+            Assert.Equal("Name Clone 2", checkerWithBudgetClone2.Result.Name);
 
             Assert.True(checkerWithBudgetClone.IsValid);
         }
@@ -105,8 +108,8 @@ namespace Budgets.Core.Tests
         [InlineData(null)]
         public void DuplicateBudgetNotExist(string nameNotExist)
         {
-            var budgetOne = new Budget(50, "Name 1");
-            var budgetTwo = new Budget(900, "Name 2");
+            var budgetOne = new BudgetRoot(50, "Name 1");
+            var budgetTwo = new BudgetRoot(900, "Name 2");
             _Wallet.AddBudget(budgetOne);
             _Wallet.AddBudget(budgetTwo);
 
@@ -122,8 +125,8 @@ namespace Budgets.Core.Tests
         [Fact]
         public void CalcultateWalletActual()
         {
-            var budgetOne = new Budget(50, "Name 1");
-            var budgetTwo = new Budget(900, "Name 2");
+            var budgetOne = new BudgetRoot(50, "Name 1");
+            var budgetTwo = new BudgetRoot(900, "Name 2");
 
             budgetOne.AddExpenditure(new Expenditure("Name", 10));
             budgetOne.AddExpenditure(new Expenditure("Name", 20));
@@ -147,8 +150,8 @@ namespace Budgets.Core.Tests
         [InlineData("Name 2")]
         public void ChangeBudgetName_NotRun(string nameNotRun)
         {
-            Budget budget = new Budget(10, "Name 1");
-            Budget budget2 = new Budget(10, "Name 2");
+            BudgetRoot budget = new BudgetRoot(10, "Name 1");
+            BudgetRoot budget2 = new BudgetRoot(10, "Name 2");
             _Wallet.AddBudget(budget);
             _Wallet.AddBudget(budget2);
 
@@ -161,7 +164,7 @@ namespace Budgets.Core.Tests
         [Fact]
         public void ChangeBudgetName_Run()
         {
-            Budget budget = new Budget(10, "Name 1");
+            BudgetRoot budget = new BudgetRoot(10, "Name 1");
             _Wallet.AddBudget(budget);
 
             var checker = _Wallet.ChangeBudgetName("Name 1", "Change Name 1");
